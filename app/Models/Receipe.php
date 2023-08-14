@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Models;
 
@@ -13,7 +13,7 @@ class Receipe extends Model
     * @var array<int, string>
     */
 
-    protected $connection = [
+    protected $fillable = [
         'user_id',
         'file',
         'receipe_name',
@@ -21,4 +21,5 @@ class Receipe extends Model
         'ingredients',
         'description'
     ];
+
 }

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReceipeController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/receipe', [ReceipeController::class, 'create'])->name('receipe.create');
+Route::post('/receipe', [ReceipeController::class, 'store'])->name('receipe.store');
+// Route::patch('/receipe', [ReceipeController::class, 'update'])->name('receipe.update');
+// Route::delete('/receipe', [ReceipeController::class, 'destroy'])->name('receipe.destroy');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
