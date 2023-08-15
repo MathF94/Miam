@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Receipe;
 use App\Models\Image;
+use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Http\UploadedFile;
 
 class ReceipeController extends Controller
 {
+    public function index()
+    {
+
+        // $receipes = Receipe::all();
+        // return view('receipe.receipe', compact('receipes'));
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,19 +32,16 @@ class ReceipeController extends Controller
      * Show the form for creating a new resource.
      * 
      */
-
-
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $user = auth()->user();
-
-        $request->validate([
-            'user_id' => 'nullable', 'id', 'max:11',
-            'file' => 'required', 'string', 'email', 'max:255',
-            'receipe_name' => 'required', 'string', 'max:255',
-            'time_cook' => 'required', 'id', 'max:11',
-            'ingredients' => 'required', 'string', 'max:255',
-            'description' => 'required', 'string', 'max:255',
+        $validate = $request->validate([
+            'user_id' => 'nullable',
+            'file' => 'required',
+            'receipe_name' => 'required',
+            'time_cook' => 'required',
+            'ingredients' => 'required',
+            'description' => 'required',
         ]);
 
         $filename = time() . '.' . $request->file->extension();
@@ -58,27 +61,29 @@ class ReceipeController extends Controller
             'description'  => $request->description,
         ]);
 
-        /* $image = new Image();
+        $image = new Image();
         $image->path = $path;
 
-        $receipe->file->save($image); */
-
-        $request->file->move(public_path('images'));
+        $receipe->image()->save($image);
 
         dd('Recette créée !');
+
+        /* event(new Registered($receipe));
+
+        return redirect('/')->with('status', 'la recette a bien été ajoutée'); */
+
+        // @todo : traitement du fichier (file storage voir vidéo)
+        // @todo : sur home, lister les requêtes que j'ai en base
     }
-
-
-
-
 
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): View
     {
-        //
+        $receipes = Receipe::all();
+        return view('receipe.receipe', compact('receipes'));
     }
 
     /**
