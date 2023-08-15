@@ -93,7 +93,7 @@ class ReceipeController extends Controller
 
         $receipe = Receipe::find($id);
         $receipe->delete();
-        return redirect('/receipe')->with('status', 'Recette supprimée');
+        return redirect('/')->with('status', 'Recette supprimée');
     }
 
     /**
@@ -107,44 +107,38 @@ class ReceipeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(string $id)
-    // {
-    //     $receipes = Receipe::find($id);
-    //     return view ('receipe.update', compact('receipes'));
-    // }
+    public function update(string $id)
+    {
+        $receipes = Receipe::find($id);
+        return view ('receipe.update', compact('receipes'));
+    }
 
-    // public function update_treatment(Request $request) 
-    // {
-    //     die(var_dump($request));
-    //     $request->validate([
-    //         'user_id' => 'nullable',
-    //         'file' => 'required',
-    //         'receipe_name' => 'required',
-    //         'time_cook' => 'required',
-    //         'ingredients' => 'required',
-    //         'description' => 'required',
-    //     ]);
+    public function update_treatment(Request $request) 
+    {
+        die(var_dump($request));
+        $request->validate([
+            'user_id' => 'nullable',
+            'file' => 'required',
+            'receipe_name' => 'required',
+            'time_cook' => 'required',
+            'ingredients' => 'required',
+            'description' => 'required',
+        ]);
 
-    //     $user = auth()->user();
-    //     $receipes = Receipe::find([
-    //         'user_id' => $user->id,
-    //         'file' => $request->file,
-    //         'receipe_name' => $request->receipe_name,
-    //         'time_cook' => $request->time_cook,
-    //         'ingredients' => $request->ingredients,
-    //         'description'  => $request->description,
-    //     ]);
+        $user = auth()->user();
+        $receipes = Receipe::find([
+            'user_id' => $user->id,
+            'file' => $request->file,
+            'receipe_name' => $request->receipe_name,
+            'time_cook' => $request->time_cook,
+            'ingredients' => $request->ingredients,
+            'description'  => $request->description,
+        ]);
 
-    //     event(new Registered($receipes));
+        event(new Registered($receipes));
 
-    //     return redirect('/receipe/{{$user->id}}')->with('status', 'la recette a bien été modifiée');
-    // }
+        return redirect('/receipe/{{$user->id}}')->with('status', 'la recette a bien été modifiée');
+    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    // public function destroy(string $id)
-    // {
-    //     //
-    // }
+
 }
