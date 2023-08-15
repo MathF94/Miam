@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use App\Models\Receipe;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ReceipeController extends Controller
 {
@@ -19,7 +22,6 @@ class ReceipeController extends Controller
     {
         $receipes = Receipe::all();
         $user = auth()->user();
-        // var_dump($user);
         return view('welcome', compact('receipes'));
     }
 
@@ -30,12 +32,14 @@ class ReceipeController extends Controller
     {
         return view('receipe.form');
     }
-    
+
     /**
      * Show the form for creating a new receipe.
      * 
      */
-    public function store(Request $request): RedirectResponse
+
+
+    public function store(Request $request)
     {
         $user = auth()->user();
     
@@ -76,11 +80,10 @@ class ReceipeController extends Controller
         // @todo : sur home, lister les requêtes que j'ai en base
     }
 
-    
     /**
      * Display the specified resource.
      */
-    public function show(string $user_id): View
+    public function show(string $user_id)
     {
         $receipes = Receipe::all();
         return view('receipe.receipe', compact('receipes'));

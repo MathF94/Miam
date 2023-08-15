@@ -5,10 +5,11 @@
         </h2>
     </x-slot>
 
-    <form action="{{url('/receipe')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('receipe.store') }}" method="POST" enctype="multipart/form-data">
+    {{-- <form action="{{url('/receipe')}}" method="POST" enctype="multipart/form-data"> --}}
         @csrf
         <label for="">
-            <input type="hidden" name="id" value="">
+            <input type="hidden" name="id" value="{{ old('id') }}">
         </label>
         <label for="file">
             <input type="file" name="file" placeholder="fichier" id="file" value="{{ old('file') }}" class="" /><span class="mandatory">*</span>
@@ -25,7 +26,14 @@
         <label for="description">
             <input type="text" name="description" placeholder="Description" id="description" value="{{ old('description') }}" class="" /><span class="mandatory">*</span>
         </label>
-        <button type="submit">Valider la recette</button>
+        <button type="submit">Valider</button>
     </form>
 
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li> {{ $error }} </li>
+        @endforeach
+    </ul>
+    
 </x-app-layout>
+    
