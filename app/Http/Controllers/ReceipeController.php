@@ -42,7 +42,7 @@ class ReceipeController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-    
+
         $request->validate([
             'user_id' => 'nullable',
             'file' => 'required',
@@ -70,7 +70,7 @@ class ReceipeController extends Controller
         ]);
 
         $request->file->move(public_path('images'));
-        
+
         event(new Registered($Receipe));
 
         return redirect('/')->with('status', 'la recette a bien été ajoutée');
@@ -88,12 +88,20 @@ class ReceipeController extends Controller
         return view('receipe.receipe', compact('receipe'));
     }
 
+    public function destroy(string $id)
+    {
+
+        $receipe = Receipe::find($id);
+        $receipe->delete();
+        return redirect('/receipe')->with('status', 'Recette supprimée');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
     // public function edit(string $id)
     // {
-        //
+    //
     // }
 
     /**

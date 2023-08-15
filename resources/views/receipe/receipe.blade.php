@@ -20,6 +20,11 @@
 @auth
     <section>
         <a href="#">Modifier la recette</a>
-        <a href="#">Supprimer la recette</a>
+
+        <form action="/receipe/{{ $receipe->id }}" method="POST">
+            @csrf
+            @method('delete')
+            <button type="submit">Delete</button>
+        </form>
     </section>
 @endauth
