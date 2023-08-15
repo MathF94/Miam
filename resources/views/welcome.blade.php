@@ -41,11 +41,15 @@
                 @auth
                 <a href="{{url('/receipe')}}"  class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Ajouter une recette</a>
                 @endauth        
-                <div class="mt-16">
+                @if (session('status'))
+                    <div>
+                        {{session('status')}}
+                    </div>
+                @endif          
+                    <div class="mt-16">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     
                     @include('receipe.lists')
-                    
                 </div>
             </div>
         </div>
