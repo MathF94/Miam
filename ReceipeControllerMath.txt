@@ -1,0 +1,112 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Receipe;
+use App\Models\Image;
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+class ReceipeController extends Controller
+{
+    public function index()
+    {
+
+        // $receipes = Receipe::all();
+        // return view('receipe.receipe', compact('receipes'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function create(): View
+    {
+        return view('receipe.form');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     * 
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $user = auth()->user();
+        $validate = $request->validate([
+            'user_id' => 'nullable',
+            'file' => 'required',
+            'receipe_name' => 'required',
+            'time_cook' => 'required',
+            'ingredients' => 'required',
+            'description' => 'required',
+        ]);
+
+        $filename = time() . '.' . $request->file->extension();
+
+        $path = $request->file('file')->storeAs(
+            'images',
+            $filename,
+            'public'
+        );
+
+        $receipe = Receipe::create([
+            'user_id' => $user->id,
+            'file' => $request->file,
+            'receipe_name' => $request->receipe_name,
+            'time_cook' => $request->time_cook,
+            'ingredients' => $request->ingredients,
+            'description'  => $request->description,
+        ]);
+
+        $image = new Image();
+        $image->path = $path;
+
+        $receipe->image()->save($image);
+
+        dd('Recette créée !');
+
+        /* event(new Registered($receipe));
+
+        return redirect('/')->with('status', 'la recette a bien été ajoutée'); */
+
+        // @todo : traitement du fichier (file storage voir vidéo)
+        // @todo : sur home, lister les requêtes que j'ai en base
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id): View
+    {
+        $receipes = Receipe::all();
+        return view('receipe.receipe', compact('receipes'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}
