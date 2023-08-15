@@ -62,7 +62,6 @@ class ReceipeController extends Controller
 
         $Receipe = Receipe::create([
             'user_id' => $user->id,
-            'username' => $user->username,
             'file' => $request->file,
             'receipe_name' => $request->receipe_name,
             'time_cook' => $request->time_cook,
@@ -83,10 +82,10 @@ class ReceipeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $user_id)
+    public function show(string $id)
     {
-        $receipes = Receipe::all();
-        return view('receipe.receipe', compact('receipes'));
+        $receipe = Receipe::find($id);
+        return view('receipe.receipe', compact('receipe'));
     }
 
     /**
@@ -117,7 +116,6 @@ class ReceipeController extends Controller
     //         'ingredients' => 'required',
     //         'description' => 'required',
     //     ]);
-
 
     //     $user = auth()->user();
     //     $receipes = Receipe::find([
