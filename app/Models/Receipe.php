@@ -28,4 +28,11 @@ class Receipe extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function image(): HasOne
+    {
+        return $this->hasOne(Image::class);
+    }
+
+
+
 }

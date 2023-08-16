@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image;
 use App\Models\Receipe;
+use App\Models\Image;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class ReceipeController extends Controller
 {
@@ -37,15 +37,12 @@ class ReceipeController extends Controller
      * Show the form for creating a new receipe.
      * 
      */
-
-
     public function store(Request $request)
     {
         $user = auth()->user();
-
         $request->validate([
             'user_id' => 'nullable',
-            'file' => 'required',
+            'file' => 'required|image',
             'receipe_name' => 'required',
             'time_cook' => 'required',
             'ingredients' => 'required',
@@ -53,30 +50,34 @@ class ReceipeController extends Controller
         ]);
 
         $filename = time() . '.' . $request->file->extension();
-
-        $path = $request->file('file')->storeAs(
+        $path = $request->file('file')->storeAs (
             'images',
             $filename,
             'public'
         );
-
-        $Receipe = Receipe::create([
+        // $request->file->move(public_path('images'));
+        $receipe = Receipe::create([
             'user_id' => $user->id,
-            'file' => $request->file,
+            'file' => $filename,
             'receipe_name' => $request->receipe_name,
             'time_cook' => $request->time_cook,
             'ingredients' => $request->ingredients,
             'description'  => $request->description,
         ]);
 
-        $request->file->move(public_path('images'));
+        $image = new Image(['path' => $path]);
+        // $image->path = $path;
+        
+        $receipe->image()->save($image);
 
-        event(new Registered($Receipe));
+        // cela permet d'enregistrer automatiquement l'id du $receipe auquel est lié l'image en base de donnée sans avoir à l'indiuer manuellement
+        // comme ça : 
+        // $image->post_id = $receipe->id;
+        
+        // dd('recette créée');
 
+        event(new Registered($receipe));
         return redirect('/')->with('status', 'la recette a bien été ajoutée');
-
-        // @todo : traitement du fichier (file storage voir vidéo)
-        // @todo : sur home, lister les requêtes que j'ai en base
     }
 
     /**
@@ -90,7 +91,6 @@ class ReceipeController extends Controller
 
     public function destroy(string $id)
     {
-
         $receipe = Receipe::find($id);
         $receipe->delete();
         return redirect('/')->with('status', 'Recette supprimée');
