@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('images', function (Blueprint $table) {
             $table->string('path');
-            $table->integer('post_id');
+            $table->integer('receipe_id');
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('image', function (Blueprint $table) {
             schema::dropColumns('path');
-            schema::dropColumns('post_id');
+            schema::dropColumns('receipe_id');
         });
     }
 };

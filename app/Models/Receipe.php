@@ -32,7 +32,4 @@ class Receipe extends Model
     {
         return $this->hasOne(Image::class);
     }
-
-
-
 }

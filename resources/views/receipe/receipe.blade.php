@@ -5,8 +5,12 @@
         <h5>Créé le : {{ $receipe->created_at->format('d-m-Y H:m:s') }} </h5> 
         <h5>Par : {{ $receipe->author->username }} </h5> {{-- auteur --}}   
     </header>
-
-    <img src=" {{ Storage::url($receipe->image->path) }}" alt="img-receipe-1">        
+    
+    @if ($receipe->image)
+            <img src="{{ Storage::url($receipe->image->path) }}" alt="">
+        @else
+            <p> Pas d'image disponible </p>
+        @endif 
     <article>
         <section>
             {{ $receipe->ingredients }}
@@ -19,13 +23,8 @@
 
 @auth
     <section>
-        <form action="/update-receipe/{{ $receipe->id }}" method="">
-            @csrf
-        {{-- <a href="#">Modifier la recette</a> --}}
-        @method('update')
-            <button type="submit">Update</button>
-        </form>
-
+        <a href="{{ route('receipe.update', ['id' => $receipe->id]) }}">Modifier la recette</a>
+        
         <form action="/receipe/{{ $receipe->id }}" method="POST">
             @csrf
             @method('delete')
