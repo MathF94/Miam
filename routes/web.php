@@ -35,8 +35,8 @@ Route::get('/', [ReceipeController::class, 'index'])->name('receipe.index');
 Route::get('/receipe/{id}', [ReceipeController::class, 'show'])->name('receipe.show');
 Route::get('/receipe', [ReceipeController::class, 'create'])->name('receipe.create');
 Route::post('/receipe', [ReceipeController::class, 'store'])->name('receipe.store');
-Route::patch('/update-receipe/{id}', [ReceipeController::class, 'update'])->name('receipe.update');
-Route::patch('/update/traitement', [ReceipeController::class, 'update'])->name('receipe.update_treatment');
+Route::get('/update-receipe/{id}', [ReceipeController::class, 'update'])->name('receipe.update');
+Route::post('/update/traitement', [ReceipeController::class, 'update_treatment'])->name('receipe.update_treatment');
 // Route::patch('/receipe', [ReceipeController::class, 'update'])->name('receipe.update');
 Route::delete('/receipe/{id}', [ReceipeController::class, 'destroy'])->name('receipe.destroy');
 
