@@ -27,8 +27,8 @@ Installation
     Installer les dépendances :
         composer install
 
-    Configurer le fichier .env (copier .env.example et adapter la configuration base de données, mail, etc.)
-
+    Configurer le fichier .env (copier .env.example et adapter la configuration base de données, mail, etc    
+    
     Générer la clé d’application :
         php artisan key:generate
 
@@ -37,4 +37,3 @@ Installation
 
     Lancer le serveur local :
         php artisan serve
-
