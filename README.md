@@ -11,18 +11,23 @@ Technologies utilisées
     CSS
     MySQL (ou autre base de données utilisée)
     Composer (pour la gestion des dépendances)
+    
+## Installation
 
-Installation
-Prérequis
-    PHP >= 8.0
-    Composer
-    Serveur web (Apache, Nginx)
-    Base de données MySQL ou compatible
+### Prérequis
 
-Installation
-    Cloner le dépôt :
-        git clone https://github.com/MathF94/miam.git
-        cd miam
+- PHP >= 8.0
+- Composer
+- Serveur web (Apache, Nginx)
+- Base de données MySQL ou compatible
+
+### Installation
+
+Cloner le dépôt :
+
+```bash
+git clone https://github.com/MathF94/miam.git
+cd miam
     
     Installer les dépendances :
         composer install
