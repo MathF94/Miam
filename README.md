@@ -31,6 +31,7 @@ Cloner le dépôt :
 ```bash
 git clone https://github.com/MathF94/miam.git
 cd miam
+```
 
 Installer les dépendances :
 ```bash
