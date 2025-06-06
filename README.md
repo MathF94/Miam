@@ -22,7 +22,7 @@ Prérequis
 Installation
     Cloner le dépôt :
         git clone https://github.com/MathF94/miam.git
-        cd miam
+        cd miam/
 
     Installer les dépendances :
         composer install
