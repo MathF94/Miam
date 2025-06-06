@@ -36,20 +36,25 @@ cd miam
 Installer les dépendances :
 ```bash
 composer install
+```
 
 Copier le fichier d’environnement :
 ```bash
 cp .env.example .env
+```
 Configurer .env avec vos informations de base de données.
 
 Générer la clé d’application :
 ```bash
 php artisan key:generate
+```
 
 Lancer les migrations pour créer la base de données :
 ```bash
 php artisan migrate
+```
 
 Lancer le serveur local :
 ```bash
 php artisan serve
+```
